@@ -10,5 +10,5 @@ void hanoi(int n, int start, int end){
 }
 
 int main(){
-    hanoi(7, 1, 3);
+    hanoi(10, 1, 3);
 }
