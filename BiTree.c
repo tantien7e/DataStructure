@@ -47,6 +47,7 @@ void addLeftChild(int u, int left){
     else{
         Node* p = makeNode(left);
         pu->leftChild = p;
+        printf("Add Child Successfully!\n");
     }
 }
 void addRightChild(int u, int right){
@@ -55,11 +56,11 @@ void addRightChild(int u, int right){
         printf("Not Found Parents\n");
         return;
     }
-    if(pu->rightChild == NULL){
+    if(pu->rightChild != NULL){
         printf("This Node has already had a right child\n");
         printf("Options: \n");
         int option;
-        printf("1. Add Left\n2.Skip\n");
+        printf("1. Add Left\n2. Skip\n");
         scanf("%d", &option);
         getchar();
         switch(option){
@@ -71,31 +72,32 @@ void addRightChild(int u, int right){
     else{
         Node* p = makeNode(right);
         pu->rightChild = p;
+        printf("Add Child Successfully!\n");
     }
 }
 
 void load(char* filename){
     FILE* f = fopen(filename, "r");
     root = NULL;
-    while(1){
+    while(!feof(f)){
         int u;
-        fscanf(f, "%d", &u);
+        int l,r;
+        fscanf(f, "%d ", &u);
         if(u == -2) break;
         if(root == NULL) root =makeNode(u);
-        int l,r;
         fscanf(f, "%d %d", &l, &r);
-        if(l>1) addLeftChild(u,l);
-        if(r>1) addRightChild(u, r);
+        if(l!= -1) addLeftChild(u,l);
+        if(r!= -1) addRightChild(u, r);
     }
     fclose(f);
 }
 void printTree(Node* r){
     if(r == NULL) return;
     printf("%d: ", r->id);
-    if(r->leftChild == NULL) printf("left Child = NULL");
-    else printf("leftChild = %d ", r->leftChild->id);
-    if(r->rightChild == NULL) printf("right Child = NULL");
-    else printf("rightChild = %d ", r->rightChild->id);
+    if(r->leftChild == NULL) printf("Left Child = NULL, ");
+    else printf("Left Child = %d, ", r->leftChild->id);
+    if(r->rightChild == NULL) printf("Right Child = NULL\n");
+    else printf("Right Child = %d.", r->rightChild->id);
     printf("\n");
 
     printTree(r->leftChild);
@@ -104,12 +106,12 @@ void printTree(Node* r){
 
 void printTreeFile(Node*r, FILE* f){
     if(r == NULL) return;
-    fprintf(f, "%d", r->id);
+    fprintf(f, "%d ", r->id);
     if(r->leftChild == NULL) fprintf(f, "-1");
-    else fprintf(f, "%d", r->leftChild->id);
+    else fprintf(f, " %d ", r->leftChild->id);
     if(r->rightChild == NULL) fprintf(f, "-1");
-    else fprintf(f, "%d", r->rightChild->id);
-    fprintf(f,"/n");
+    else fprintf(f, " %d ", r->rightChild->id);
+    fprintf(f,"\n");
 
     printTreeFile(r->leftChild, f);
     printTreeFile(r->rightChild, f);
@@ -121,10 +123,10 @@ void processLoad(){
 }
 
 void printChildren(Node* p){
-    if(p->leftChild == NULL) printf("Node %d does not has leftChild", p->id);
-    else printf("Left Child = %d", p->leftChild->id);
+    if(p->leftChild == NULL) printf("Node %d does not has leftChild\n", p->id);
+    else printf("Left Child = %d\n", p->leftChild->id);
     if(p->rightChild == NULL) printf("Node %d has no right Child\n", p->id);
-    else printf("Right Chiild = %d", p->rightChild->id);
+    else printf("Right Chiild = %d\n", p->rightChild->id);
 }
 
 void processFind(){
@@ -152,7 +154,6 @@ void processAddLefChild(){
     scanf("%d", &u);
     getchar();
     addLeftChild(id, u);
-    printf("Add Child Successfully!\n");
 }
 void processAddRightChild(){
     int id,u;
@@ -163,7 +164,6 @@ void processAddRightChild(){
     scanf("%d", &u);
     getchar();
     addRightChild(id, u);
-    printf("Add Child Successfully!\n");
 }
 int height(Node* p){
     if(p == NULL) return 0;
