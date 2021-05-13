@@ -219,6 +219,7 @@ void freeTree(Node*r){
 }
 Node* makeRoot(int data){
     Node* p = makeNode(data);
+    free(root);
     root = p;
     p->leftChild = NULL;
     p->rightChild = NULL;
