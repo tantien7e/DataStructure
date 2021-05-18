@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 typedef struct Address{
     char name[30];
@@ -25,10 +26,36 @@ void processLoad(){
     scanf("%s", filename);
     load(filename);
 }
+
+
+void insertionSort(Address List[]){
+    for(int i = 0; i<element; i++){
+        Address min = List[i];
+    while(i > 0 && strcmp(List[i-1].name, List[i].name) >0 ){
+        List[i]= List[i-1];
+        i--;
+    }
+    List[i] = min;
+    }
+}
+
+void store(){
+    char filename[30];
+    printf("Enter the file name: ");
+    scanf("%s", filename);
+    FILE* p = fopen(filename, "w+");
+    fprintf(p, "%d\n", element);
+    for(int i = 0; i < element; i++){
+        fprintf(p, "%s %s %s\n",List[i].name, List[i].phone, List[i].email);
+    }
+    fclose(p);
+}
+
+
+
 int main(){
     processLoad();
-    for(int i = 0; i < element; i++){
-        printf("%s\n", List[i].name);
-    }
+    insertionSort(List);
+    store();
     return 0;
 }

@@ -1,17 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-void swap(int a , int b){
-    int tmp = a;
-    a = b;
-    b = tmp;
-}
+#include<string.h>
 
 int main(){
-    int a = 6;
-    int b = 9;
-    printf("%d - %d\n", a, a/b);
-    swap(a, b);
-    printf("%d - %d\n", a, b);
+    char a[] = "bak";
+    char b[] = "taw";
+    int i = strcmp(a, b);
+    printf("%d\n",i);
     return 0;
 }
