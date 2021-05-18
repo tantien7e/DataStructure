@@ -7,17 +7,14 @@ typedef struct Address{
     char email[30];
 } Address;
 
-Address List[];
+Address List[100];
 int element;
 
 void load(char* filename){
     FILE* fptr = fopen(filename, "r");
-    int n;
-    fscanf(fptr, "%d\n", &n);
-    element = n;
-    Address* pointer = (Address*)malloc(sizeof(Address)*n);
-    for(int i = 0; i<n; i++){
-        fscanf(fptr, "%s-%s-%s\n", List[i].name, List[i].phone, List[i].email);
+    fscanf(fptr, "%d\n", &element);
+    for(int i = 0; i<element; i++){
+        fscanf(fptr, "%s %s %s\n", List[i].name, List[i].phone, List[i].email);
     }
     fclose(fptr);
 }   
@@ -27,12 +24,6 @@ void processLoad(){
     printf("Enter the file name: ");
     scanf("%s", filename);
     load(filename);
-}
-
-void insertionSort(Address List[]){
-    for(int i = 1; i< element; i++){
-
-    }
 }
 int main(){
     processLoad();
