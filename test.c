@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+int swap(int a, int b){
+    int tmp = a;
+    a=b;
+    b=tmp;
+}
 
 typedef struct books {
     char book_name[30];
@@ -65,6 +70,7 @@ void processPrint(){
 }
 
 int main(){
+
     int mode;
     iniList();
     printf("1. Enter information of n books of HUST\n2. Print the information of the entered books on the screen\n3. Sort descending information by year of publication and display\n4. Search for books by tile\n5. Seach books by authors' name\6. Exit");
@@ -95,5 +101,12 @@ int main(){
         }
     } while(mode != 6);
     
+}
+
+
+    int Arr[] = {1, 2};
+    swap(Arr[0], Arr[1]);
+    printf("%d", Arr[0]);
+    return 0;
 }
 

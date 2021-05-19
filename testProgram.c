@@ -4,7 +4,7 @@
 #include<string.h>
 
 int* createArr(){
-    int *p = (int*)malloc(sizeof(int)*100000);
+    int *p = (int*)malloc(sizeof(int)*10000000);
     return p;
 }
 
@@ -28,7 +28,7 @@ void insertionSort(int *p, int n){
             p[i] = p[i-1];
             i--;
         }
-        p[i] = value;
+        p[i] = value; 
     }
     int t = clock();
     printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
@@ -66,7 +66,7 @@ void heapify(int *p, int n, int i){
 
 void heapSort(int* p, int n){
     //Build heap from bottom up
-    for(int i = n/2-1; i>0; i--){
+    for(int i = n/2-1; i>=0; i--){
         heapify(p, n, i);
     }
     //take out the biggest item, the heap -1 element
@@ -79,8 +79,10 @@ void heapSort(int* p, int n){
 }
 
 int main(){
+
     int* p = createArr();
-    generateArr(p, 100000);
-    selectionSort(p, 100000);
+    generateArr(p, 10000000);
+    heapSort(p, 10000000);
+    
     return 0;
 }

@@ -31,7 +31,7 @@ void processLoad(){
 void insertionSort(Address List[]){
     for(int i = 0; i<element; i++){
         Address min = List[i];
-    while(i > 0 && strcmp(List[i-1].name, List[i].name) >0 ){
+    while(i > 0 && strcmp(min.name, List[i-1].name) <0 ){
         List[i]= List[i-1];
         i--;
     }
