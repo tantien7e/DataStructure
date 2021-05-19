@@ -1,48 +1,86 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<ctype.h>
+#include<time.h>
+#include<string.h>
 
-typedef struct Address{
-    char name[30];
-    char phone [15];
-    char email[30];
-} Address;
-
-Address List[];
-int element;
-
-void load(char* filename){
-    FILE* fptr = fopen(filename, "r");
-    int n;
-    fscanf(fptr, "%d\n", &element);
-    int i;
-    for( i = 0; i<element; i++){
-        fscanf(fptr, "%s %s %s\n", List[i].name, List[i].phone, List[i].email);
-    }
-    fclose(fptr);
+int* createArr(){
+    int *p = (int*)malloc(sizeof(int)*100000);
+    return p;
 }
 
-void processLoad(){
-    char filename[30];
-    printf("Enter the file name: ");
-    scanf("%s", filename);
-    load(filename);
+void swap(int* a, int* b){
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+void generateArr(int* p, int n){
+    srand((int) time(0));
+    for(int i = 0; i< n; i++){
+        p[i] = rand();
+    }
 }
 
-void sort(){
-    Address toLowerList[element];
-    int i;
-    for(i=0; i<element; i++){
 
+void insertionSort(int *p, int n){
+    for(int i =1; i < n; i++){
+        int value = p[i];
+        while(i> 0 && value < p[i-1]){
+            p[i] = p[i-1];
+            i--;
+        }
+        p[i] = value;
     }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
+}
 
+void selectionSort (int *p, int n){
+    for(int i = 0; i< n; i++){
+        for(int j = i+ 1; j<n; j++){
+            if(p[j]< p[i]){
+                int tmp = p[j];
+                p[j] = p[i];
+                p[i] = tmp;
+            }
+        }
+    }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
+}
+
+void heapify(int *p, int n, int i){
+    int largest = i;
+    int l = i*2 + 1;
+    int r = i*2 + 2;
+    if(l<n && p[l] > p[largest]){
+        largest = l;
+    }
+    if( r<n && p[r] > p[largest]){
+        largest = r;
+    }
+    if(largest != i){
+        swap(&p[largest], &p[i]);
+        heapify(p,n,largest);
+    }
+}
+
+void heapSort(int* p, int n){
+    //Build heap from bottom up
+    for(int i = n/2-1; i>0; i--){
+        heapify(p, n, i);
+    }
+    //take out the biggest item, the heap -1 element
+    for(int i = n-1; i> 0; i--){
+        swap(&p[i], &p[0]);
+        heapify(p, i, 0);
+    }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
 }
 
 int main(){
-    processLoad();
-    int i;
-    for( i = 0; i < element; i++){
-        printf("%s\n", List[i].name);
-    }
+    int* p = createArr();
+    generateArr(p, 100000);
+    selectionSort(p, 100000);
     return 0;
 }

@@ -27,6 +27,7 @@ void processLoad(){
     load(filename);
 }
 
+
 void insertionSort(Address List[]){
     for(int i = 0; i<element; i++){
         Address min = List[i];
@@ -49,6 +50,7 @@ void store(){
     }
     fclose(p);
 }
+
 
 
 int main(){

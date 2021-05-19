@@ -4,7 +4,7 @@
 #include<string.h>
 
 int* createArr(){
-    int *p = (int*)malloc(sizeof(int)*100);
+    int *p = (int*)malloc(sizeof(int)*10000000);
     return p;
 }
 
@@ -30,6 +30,8 @@ void insertionSort(int *p, int n){
         }
         p[i] = value; 
     }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
 }
 
 void selectionSort (int *p, int n){
@@ -42,6 +44,8 @@ void selectionSort (int *p, int n){
             }
         }
     }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
 }
 
 void heapify(int *p, int n, int i){
@@ -62,21 +66,23 @@ void heapify(int *p, int n, int i){
 
 void heapSort(int* p, int n){
     //Build heap from bottom up
-    for(int i = n/2-1; i>0; i--){
+    for(int i = n/2-1; i>=0; i--){
         heapify(p, n, i);
     }
     //take out the biggest item, the heap -1 element
-    for(int i = n-1; i> 0; i++){
+    for(int i = n-1; i> 0; i--){
         swap(&p[i], &p[0]);
         heapify(p, i, 0);
     }
+    int t = clock();
+    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
 }
 
 int main(){
-    int Arr[5] = {9, 7, 6, 1, 3};
-    heapSort(Arr, 5);
-    for(int i = 0; i< 5; i++){
-        printf("%d ", Arr[i]);
-    } 
+
+    int* p = createArr();
+    generateArr(p, 10000000);
+    heapSort(p, 10000000);
+    
     return 0;
 }
