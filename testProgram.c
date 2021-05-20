@@ -45,6 +45,7 @@ void insertionSort(int *p, int n){
 }
 
 void selectionSort (int *p, int n){
+    
     clock_t tstart,tfinish;
     tstart= clock();
     time_t t1,t2; time(&t1);
@@ -149,7 +150,8 @@ void processQuickSort(int * p, int n){
 int main(){
 
     int* p = createArr();
-    printf("1. Generate data\n2.Insertion Sort\n3.Selection Sort\n4.Heap Sort\n5.Quick Sort\n");
+    int* k = createArr();
+    printf("1. Generate data\n2.Insertion Sort\n3.Selection Sort\n4.Heap Sort\n5.Quick Sort\n6.Copy Array\n");
     int mode;
     do{
     printf("Choose mode: ");
@@ -163,18 +165,23 @@ int main(){
             generateArr(p, nbOfE);
         break;
     case 2:;
-            insertionSort(p, nbOfE);
+            insertionSort(k, nbOfE);
         break;
     case 3:;
-            selectionSort(p, nbOfE);
+            selectionSort(k, nbOfE);
         break;
     case 4:;
-            heapSort(p, nbOfE);
+            heapSort(k, nbOfE);
         break;
     case 5:;
-            processQuickSort(p, nbOfE);
+            processQuickSort(k, nbOfE);
         break;
-    default: printf("invalid!");
+    case 6:; 
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+            break;
+    default: printf("invalid!\n");
         break;
     }
     } while(mode !=0);
