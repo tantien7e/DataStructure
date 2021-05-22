@@ -146,12 +146,73 @@ void processQuickSort(int * p, int n){
     printf("Tick: %f\n", tcomp);
 
 }
+void merge(int* Left, int* Right, int* p, int l, int r){
+    int i, j, k;
+    i = j =k =0;
+    while (i < l && j< r){
+        if(Left[i]<=Right[j]){
+            p[k] = Left[i];
+            k++;
+            i++;
+        }
+        else{
+            p[k] = Right[j];
+            j++;
+            k++;
+        }
+    }
+    while(i<l){
+        p[k] = Left[i];
+        i++;
+        k++;
+    }
+    while(j<r){
+        p[k] = Right[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int*p, int n){
+    
+    if(n<2) return;
+    else{
+        int mid = n/2;
+        int Left[mid];
+        int Right[n-mid];
+        for(int i = 0; i< mid; i++){
+            Left[i] = p[i];
+        }
+        for(int j = mid; j< n; j++){
+            Right[j-mid] = p[j];
+        }
+        mergeSort(Left, mid);
+        mergeSort(Right, n-mid);
+        merge(Left, Right, p, mid, n-mid);
+    }
+}
+void processMergeSort(int*p, int n){
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
+
+    mergeSort(p,n);
+
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
+}
+
 
 int main(){
 
     int* p = createArr();
     int* k = createArr();
-    printf("1. Generate data\n2.Insertion Sort\n3.Selection Sort\n4.Heap Sort\n5.Quick Sort\n6.Copy Array\n");
+    printf("1. Generate data\n2.Insertion Sort\n3.Selection Sort\n4.Heap Sort\n5.Quick Sort\n6. Merge Sort\n");
     int mode;
     do{
     printf("Choose mode: ");
@@ -163,26 +224,42 @@ int main(){
             printf("Enter the number of Element: ");
             scanf("%d", &nbOfE);
             generateArr(p, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
         break;
     case 2:;
             insertionSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
         break;
     case 3:;
             selectionSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
         break;
     case 4:;
             heapSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
         break;
     case 5:;
             processQuickSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
         break;
-    case 6:; 
+    case 6:;
+            processMergeSort(k, nbOfE);
             for(int i = 0; i< nbOfE; i++){
                 k[i] = p[i];
             }
             break;
     default: printf("invalid!\n");
-        break;
+            break;
     }
     } while(mode !=0);
     return 0;
