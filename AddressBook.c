@@ -27,17 +27,51 @@ void processLoad(){
     load(filename);
 }
 
-
-void insertionSort(Address List[]){
-    for(int i = 0; i<element; i++){
-        Address min = List[i];
-    while(i > 0 && strcmp(min.name, List[i-1].name) <0 ){
-        List[i]= List[i-1];
-        i--;
+void merge(Address L[], Address R[], Address List[], int l, int r){
+    int i,j,k;
+    i=j=k=0;
+    while(i< l && j < r){
+        if(strcmp(L[i].name, R[j].name)<0){
+            List[k] = L[i];
+            i++;
+            k++;
+        }
+        else{
+            List[k] = R[j];
+            j++;
+            k++;
+        }
     }
-    List[i] = min;
+    while(i<l){
+        List[k] = L[i];
+        i++;
+        k++;
+    }
+    while(j<r){
+        List[k] = R[j];
+        k++;
+        j++;
     }
 }
+
+void mergeSort(Address List[], int n){
+    if(n<2) return;
+    else {
+        int mid = n/2;
+        Address L[mid];
+        Address R[n-mid];
+        for(int i = 0; i< mid; i++){
+            L[i] = List[i];
+        }
+        for(int j = mid; j<n; j++){
+            R[j-mid] = List[j];
+        }
+        mergeSort(L, mid);
+        mergeSort(R, n-mid);
+        merge(L,R,List,mid,n-mid);
+    }
+}
+
 
 void store(){
     char filename[30];
@@ -53,9 +87,10 @@ void store(){
 
 
 
+
 int main(){
     processLoad();
-    insertionSort(List);
+    mergeSort(List,element);
     store();
     return 0;
 }

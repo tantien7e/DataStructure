@@ -3,6 +3,8 @@
 #include<time.h>
 #include<string.h>
 
+int nbOfE;
+
 int* createArr(){
     int *p = (int*)malloc(sizeof(int)*10000000);
     return p;
@@ -22,6 +24,9 @@ void generateArr(int* p, int n){
 
 
 void insertionSort(int *p, int n){
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
     for(int i =1; i < n; i++){
         int value = p[i];
         while(i> 0 && value < p[i-1]){
@@ -30,11 +35,21 @@ void insertionSort(int *p, int n){
         }
         p[i] = value; 
     }
-    int t = clock();
-    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
 }
 
 void selectionSort (int *p, int n){
+    
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
+
     for(int i = 0; i< n; i++){
         for(int j = i+ 1; j<n; j++){
             if(p[j]< p[i]){
@@ -44,8 +59,14 @@ void selectionSort (int *p, int n){
             }
         }
     }
-    int t = clock();
-    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
+
 }
 
 void heapify(int *p, int n, int i){
@@ -66,6 +87,9 @@ void heapify(int *p, int n, int i){
 
 void heapSort(int* p, int n){
     //Build heap from bottom up
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
     for(int i = n/2-1; i>=0; i--){
         heapify(p, n, i);
     }
@@ -74,15 +98,169 @@ void heapSort(int* p, int n){
         swap(&p[i], &p[0]);
         heapify(p, i, 0);
     }
-    int t = clock();
-    printf("Running time is: %f\n",(float) t/CLOCKS_PER_SEC);
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
+
 }
+
+int partition(int *p, int start, int end){
+    int pivot = p[end];
+    int index = start;
+    for(int i = start; i<=end; i++){
+        if(p[i]<=pivot){
+            swap(&p[i], &p[index]);
+            index++;
+        }
+    }
+    return index-1;
+}
+
+void quickSort(int* p, int start, int end){
+    if(start < end){
+        int k = partition(p, start, end);
+        quickSort(p, start, k-1);
+        quickSort(p, k+1, end);
+    }
+    else return;
+}
+
+void processQuickSort(int * p, int n){
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
+
+    int start = 0;
+    int end = n -1;
+    quickSort(p, start, end);
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
+
+}
+void merge(int* Left, int* Right, int* p, int l, int r){
+    int i, j, k;
+    i = j =k =0;
+    while (i < l && j< r){
+        if(Left[i]<=Right[j]){
+            p[k] = Left[i];
+            k++;
+            i++;
+        }
+        else{
+            p[k] = Right[j];
+            j++;
+            k++;
+        }
+    }
+    while(i<l){
+        p[k] = Left[i];
+        i++;
+        k++;
+    }
+    while(j<r){
+        p[k] = Right[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int*p, int n){
+    
+    if(n<2) return;
+    else{
+        int mid = n/2;
+        int Left[mid];
+        int Right[n-mid];
+        for(int i = 0; i< mid; i++){
+            Left[i] = p[i];
+        }
+        for(int j = mid; j< n; j++){
+            Right[j-mid] = p[j];
+        }
+        mergeSort(Left, mid);
+        mergeSort(Right, n-mid);
+        merge(Left, Right, p, mid, n-mid);
+    }
+}
+void processMergeSort(int*p, int n){
+    clock_t tstart,tfinish;
+    tstart= clock();
+    time_t t1,t2; time(&t1);
+
+    mergeSort(p,n);
+
+    time(&t2);
+    int durationinseconds = (int) (t2 - t1);
+    tfinish= clock();
+    float tcomp; 
+    tcomp=(float)(tfinish-tstart)/CLOCKS_PER_SEC;
+    printf("Second: %d\n", durationinseconds);
+    printf("Tick: %f\n", tcomp);
+}
+
 
 int main(){
 
     int* p = createArr();
-    generateArr(p, 10000000);
-    heapSort(p, 10000000);
-    
+    int* k = createArr();
+    printf("1. Generate data\n2.Insertion Sort\n3.Selection Sort\n4.Heap Sort\n5.Quick Sort\n6. Merge Sort\n");
+    int mode;
+    do{
+    printf("Choose mode: ");
+    scanf("%d", &mode);
+    switch (mode)
+    {
+    case 0:; return 0;
+    case 1:; 
+            printf("Enter the number of Element: ");
+            scanf("%d", &nbOfE);
+            generateArr(p, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+        break;
+    case 2:;
+            insertionSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+        break;
+    case 3:;
+            selectionSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+        break;
+    case 4:;
+            heapSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+        break;
+    case 5:;
+            processQuickSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+        break;
+    case 6:;
+            processMergeSort(k, nbOfE);
+            for(int i = 0; i< nbOfE; i++){
+                k[i] = p[i];
+            }
+            break;
+    default: printf("invalid!\n");
+            break;
+    }
+    } while(mode !=0);
     return 0;
 }
