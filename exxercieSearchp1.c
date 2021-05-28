@@ -84,7 +84,7 @@ void processFind(){
 }
 
 void processRemove(){
-    char* name[30];
+    char name[30];
     printf("Enter the student's name: ");
     scanf("%s", name);
     int k = find(name);
