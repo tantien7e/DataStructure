@@ -5,8 +5,7 @@
 
 int main(){
     char* a = "bka";
-    char* b = "tka";
-    int v = strcmp(a,b);
+    
     printf("%d\n", v);
     return 0;
 }
