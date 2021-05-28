@@ -59,7 +59,7 @@ void processPrint(){
         printf("Student number[%d]: %s - %s\n",i+1, list[i].name, list[i].email);
     }
 }
-int find(char* name){
+int find(char name[]){
     int start = 0;
     int end = nbOStd - 1;
     while(start<=end) {
@@ -84,7 +84,7 @@ void processFind(){
 }
 
 void processRemove(){
-    char* name[30];
+    char name[30];
     printf("Enter the student's name: ");
     scanf("%s", name);
     int k = find(name);
