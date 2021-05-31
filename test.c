@@ -5,7 +5,7 @@
 
 int main(){
     char* a = "bka";
-    
+    hihi;
     printf("%d\n", v);
     return 0;
 }
