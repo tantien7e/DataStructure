@@ -4,9 +4,9 @@
 #include<string.h>
 
 int main(){
-    char* a = "bka";
-    
-    printf("%d\n", v);
+    int a = 2;
+    int b = 3;
+    int c = a+b;
     return 0;
 }
 
