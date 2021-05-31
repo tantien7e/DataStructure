@@ -59,7 +59,7 @@ void processPrint(){
         printf("Student number[%d]: %s - %s\n",i+1, list[i].name, list[i].email);
     }
 }
-int find(char* name){
+int find(char name[]){
     int start = 0;
     int end = nbOStd - 1;
     while(start<=end) {
