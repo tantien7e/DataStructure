@@ -65,8 +65,8 @@ int find(char name[]){
     while(start<=end) {
         int mid = (start + end)/2;    
         if(strcmp(name, list[mid].name) == 0) return mid;
-        if(strcmp(name, list[mid].name) < 0) end = mid - 1;
-        if(strcmp(name, list[mid].name)> 0) start = mid + 1;
+        else if(strcmp(name, list[mid].name) < 0) end = mid - 1;
+        else start = mid + 1;
     }
     return -1;
 }
